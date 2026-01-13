@@ -73,5 +73,10 @@ public class RobotMap {
       System.err.println("exception from RobotMap.init():" + e.toString());
       // can't read the config. Carry on.
     }
+
   }
+
+  // [U]ser Input
+  public static final int U_DRIVER_XBOX_CONTROLLER = 0;
+  public static final int U_OPERATOR_XBOX_CONTROLLER = 0;
 }

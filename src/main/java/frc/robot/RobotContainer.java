@@ -4,15 +4,35 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.testingdashboard.TestingDashboard;
 
 public class RobotContainer {
+  private PowerDistribution m_pdBoard;
+
   public RobotContainer() {
+    RobotMap.init();
+
+    m_pdBoard = new PowerDistribution(1, ModuleType.kRev);
+    m_pdBoard.setSwitchableChannel(true);
+
+    registerCommands();
+    
     configureBindings();
+
+    TestingDashboard.getInstance().createTestingDashboard();
   }
 
-  private void configureBindings() {}
+  private void registerCommands() {
+
+  }
+
+  private void configureBindings() {
+    OI.getInstance().bindControls();
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
