@@ -222,4 +222,15 @@ public class Configuration {
     }
     return Integer.valueOf(values.get(name).toString()).intValue();
   }
+
+  public boolean getBool(String subsystem, String name)
+  {
+    Map<String, Object> values = m_values.get(subsystem);
+    if (values == null)
+    {
+      loadSubsystem(subsystem);
+      values = m_values.get(subsystem);
+    }
+    return Boolean.valueOf(values.get(name).toString()).booleanValue();
+  }
 }

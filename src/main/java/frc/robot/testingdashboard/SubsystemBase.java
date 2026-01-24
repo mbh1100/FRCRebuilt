@@ -45,11 +45,16 @@ public class SubsystemBase extends edu.wpi.first.wpilibj2.command.SubsystemBase 
 
   public double cfgDbl(String name)
   {
-    return Configuration.getInstance().getDouble(getName(), name);
+    return config().getDouble(getName(), name);
   }
 
   public int cfgInt(String name)
   {
-    return Configuration.getInstance().getInt(getName(), name);
+    return config().getInt(getName(), name);
+  }
+
+  public boolean cfgBool(String name)
+  {
+    return config().getBool(getName(), name);
   }
 }
