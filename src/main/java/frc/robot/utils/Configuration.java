@@ -101,7 +101,6 @@ public class Configuration {
           System.out.println("no config named " + myIdentity);
           return;
         }
-        System.out.println("got it. ");
       }
       else
       {
@@ -111,18 +110,6 @@ public class Configuration {
       System.err.println("exception from RobotMap.init():" + e.toString());
       // can't read the config. Carry on.
     }
-    try {
-      SparkBase sb = getMotorController("frontRightDrive");
-      System.out.println(sb.toString());
-      double d = getDouble("Drive", "testDouble");
-      System.out.println("double: " + d);
-      int i = getInt("Drive", "testInt");
-      System.out.println("int: " + i);
-    }
-    catch (Exception x) {
-      System.err.println("init oops: " + x);
-    }
-
   }
 
   public SparkBase getMotorController(String motorName)
@@ -131,11 +118,6 @@ public class Configuration {
     if (m_motorConfigs == null)
     {
       JsonNode motorConfigs = m_config.findValue("motorConfigs");
-      if (motorConfigs != null) 
-      {
-        System.out.println("got motors: " + motorConfigs);  
-      }
-
       try {
         ObjectMapper om = new ObjectMapper();
         m_motorConfigs = om.readValue(motorConfigs.toString(), new TypeReference<Map<String, MotorConfig>>(){});
@@ -143,7 +125,6 @@ public class Configuration {
         System.out.println("getMotorConfig: oops, " + x);
         return rval;
       }
-      System.out.println("motorConfigs has " + m_motorConfigs.size());
     }
     MotorConfig whichConfig = m_motorConfigs.get(motorName);
     if (whichConfig == null)
@@ -159,6 +140,7 @@ public class Configuration {
         break;
       case "SparkMax":
         rval = new SparkMax(whichConfig.m_CANid, whichConfig.m_motorType);
+        System.out.println("creating SparkMax with id " + whichConfig.m_CANid);
         break;
       default:
         System.err.println("Invalid controller type " + whichConfig.m_controllerType);
@@ -168,6 +150,7 @@ public class Configuration {
 
   public List<VisionConfig> getVisionConfigs()
   {
+ /*
     VisionConfig test = new VisionConfig("foo", new Translation3d(), new Rotation3d(), PoseStrategy.LOWEST_AMBIGUITY, PoseStrategy.CLOSEST_TO_CAMERA_HEIGHT);
     ObjectMapper testOm = new ObjectMapper();
     try
@@ -178,6 +161,7 @@ public class Configuration {
     {
       System.err.println("test oops: " + x);
     }
+ */
     
     if (m_VisionConfigs != null) return m_VisionConfigs;
     if (m_config == null) return null;
@@ -193,7 +177,7 @@ public class Configuration {
     } catch (Exception x) {
       System.err.println("getVisionConfigs: oops, " + x);
     }
-    System.out.println("visionConfigs has " + m_motorConfigs.size());
+    System.out.println("visionConfigs has " + m_VisionConfigs.size());
     return m_VisionConfigs;
   }
 
@@ -203,11 +187,6 @@ public class Configuration {
     Map<String, Object> values = m_values.get(subsystem);
 
     JsonNode subsystemConfig = m_config.findValue(subsystem);
-    if (subsystemConfig != null) 
-    {
-      System.out.println("got config for " + subsystem + ": " + subsystemConfig.toString());
-    }
-
     try {
       ObjectMapper om = new ObjectMapper();
       List<RobotMapConfigValue> subsystemValues = om.readValue(subsystemConfig.toString(), new TypeReference<List<RobotMapConfigValue>>(){});

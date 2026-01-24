@@ -38,6 +38,11 @@ public class SubsystemBase extends edu.wpi.first.wpilibj2.command.SubsystemBase 
     m_values.add(value);
   }
 
+  public Configuration config()
+  {
+    return Configuration.getInstance();
+  }
+
   public double cfgDbl(String name)
   {
     return Configuration.getInstance().getDouble(getName(), name);

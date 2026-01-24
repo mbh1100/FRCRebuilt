@@ -44,23 +44,10 @@ public class RobotMap {
   // [U]ser Input
   public static int U_DRIVER_XBOX_CONTROLLER = 0;
   public static int U_OPERATOR_XBOX_CONTROLLER = 1;
-
-  // [D]rive
-  // TODO: fill in drive mappings
-  public static int D_FRONT_RIGHT_DRIVE = RoboRioMap.CAN_8;
-  public static int D_FRONT_LEFT_DRIVE = RoboRioMap.CAN_10;
-  public static int D_BACK_RIGHT_DRIVE = RoboRioMap.CAN_12;
-  public static int D_BACK_LEFT_DRIVE = RoboRioMap.CAN_14;
-  // TODO: fill in turning mappings
-  public static int D_FRONT_RIGHT_TURNING = RoboRioMap.CAN_9;
-  public static int D_FRONT_LEFT_TURNING = RoboRioMap.CAN_11;
-  public static int D_BACK_RIGHT_TURNING = RoboRioMap.CAN_13;
-  public static int D_BACK_LEFT_TURNING = RoboRioMap.CAN_15;
-
   // [I]ntake TODO: fill in intake mappings
   public static boolean I_ENABLED = true;
-  public static int I_MOTOR_ONE = RoboRioMap.CAN_0;
-  public static int I_MOTOR_TWO = RoboRioMap.CAN_0; //might need 2 motors for intake
+  public static int I_MOTOR_ONE = RoboRioMap.CAN_29;
+  public static int I_MOTOR_TWO = RoboRioMap.CAN_28; //might need 2 motors for intake
   public static boolean I_OPPOSITE = true;  //jason said there could need to be 2 intake motors and they might go in opposite directions
 
   // [S]hooter

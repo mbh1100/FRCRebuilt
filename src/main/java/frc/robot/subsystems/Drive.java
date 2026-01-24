@@ -38,6 +38,7 @@ import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.*;
 import frc.robot.utils.SwerveUtils;
+import frc.robot.utils.Configuration;
 import frc.robot.utils.FieldUtils;
 
 public class Drive extends SubsystemBase {
@@ -45,24 +46,24 @@ public class Drive extends SubsystemBase {
   private final Field2d m_field;
 
   private final MAXSwerveModule m_FrontLeft = new MAXSwerveModule(
-    RobotMap.D_FRONT_LEFT_DRIVE, 
-    RobotMap.D_FRONT_LEFT_TURNING, 
-    DriveConstants.kFrontLeftChassisAngularOffset);
+    config().getMotorController("frontLeftDrive"),
+    config().getMotorController("frontLeftTurning"),
+    cfgDbl("frontLeftChassisAngularOffset"));
 
   private final MAXSwerveModule m_FrontRight = new MAXSwerveModule(
-    RobotMap.D_FRONT_RIGHT_DRIVE, 
-    RobotMap.D_FRONT_RIGHT_TURNING, 
-    DriveConstants.kFrontRightChassisAngularOffset);
+    config().getMotorController("frontRightDrive"),
+    config().getMotorController("frontRightTurning"),
+    cfgDbl("frontRightChassisAngularOffset"));
 
   private final MAXSwerveModule m_BackLeft = new MAXSwerveModule(
-    RobotMap.D_BACK_LEFT_DRIVE, 
-    RobotMap.D_BACK_LEFT_TURNING, 
-    DriveConstants.kBackLeftChassisAngularOffset);
+    config().getMotorController("backLeftDrive"),
+    config().getMotorController("backLeftTurning"),
+    cfgDbl("backLeftChassisAngularOffset"));
 
   private final MAXSwerveModule m_BackRight = new MAXSwerveModule(
-    RobotMap.D_BACK_RIGHT_DRIVE, 
-    RobotMap.D_BACK_RIGHT_TURNING, 
-    DriveConstants.kBackRightChassisAngularOffset);
+    config().getMotorController("backRightDrive"),
+    config().getMotorController("backRightTurning"),
+    cfgDbl("backRightChassisAngularOffset"));
   
   // The gyro sensor
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
@@ -117,6 +118,11 @@ public class Drive extends SubsystemBase {
   TDNumber m_TLeftBackCurrentOutput;
   TDNumber m_TRightBackCurrentOutput;
 
+  TDNumber m_TRightFrontSetpoint;
+  TDNumber m_TLeftFrontSetpoint;
+  TDNumber m_TRightBackSetpoint;
+  TDNumber m_TLeftBackSetpoint;
+
   /** Creates a new Drive. */
   private Drive() {
     super("Drive");
@@ -149,6 +155,7 @@ public class Drive extends SubsystemBase {
     TDBackLeftAngle = new TDNumber(this, "Drive Speed", "Back Left Angle");
     TDBackRightDriveSpeed = new TDNumber(this, "Drive Speed", "Back Right Speed");
     TDBackRightAngle = new TDNumber(this, "Drive Speed", "Back Right Angle");
+  
     
     TDPoseX = new TDNumber(this, "Drive Pose", "PoseX");
     TDPoseY = new TDNumber(this, "Drive Pose", "PoseY");
@@ -165,6 +172,10 @@ public class Drive extends SubsystemBase {
     m_TLeftBackCurrentOutput = new TDNumber(this, "Current", "Steering Back Left Output");
     m_TRightBackCurrentOutput = new TDNumber(this, "Current", "Steering Back Right Output");  
   
+    m_TRightFrontSetpoint = new TDNumber(this, "Current", "Steering Front Right Setpoint");
+    m_TLeftFrontSetpoint  = new TDNumber(this, "Current", "Steering Front Left Setpoint");
+    m_TRightBackSetpoint  = new TDNumber(this, "Current", "Steering Back Right Setpoint");
+    m_TLeftBackSetpoint   = new TDNumber(this, "Current", "Steering Back Left Setpoint");
     DCMotor neovortex = DCMotor.getNeoVortex(1).withReduction(SwerveModuleConstants.kDrivingMotorReduction);
     
     ModuleConfig swerveModuleConfig = new ModuleConfig(SwerveModuleConstants.kWheelDiameterMeters/2, DriveConstants.kMaxSpeedMetersPerSecond, 
@@ -484,6 +495,11 @@ public class Drive extends SubsystemBase {
     m_TRightFrontCurrentOutput.set(m_FrontRight.getTurningOutputCurrent());
     m_TLeftBackCurrentOutput.set(m_BackLeft.getTurningOutputCurrent());
     m_TRightBackCurrentOutput.set(m_BackRight.getTurningOutputCurrent());
+
+    m_TRightFrontSetpoint.set(m_FrontRight.getLastSpeed());
+    m_TLeftFrontSetpoint.set(m_FrontLeft.getLastSpeed());
+    m_TRightBackSetpoint.set(m_BackRight.getLastSpeed());
+    m_TLeftBackSetpoint.set(m_BackLeft.getLastSpeed());
   }
 
   public ChassisSpeeds limitRates(ChassisSpeeds commandedSpeeds) {
