@@ -23,9 +23,9 @@ import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.testingdashboard.SubsystemBase;
 import frc.robot.testingdashboard.TDBoolean;
 import frc.robot.testingdashboard.TDNumber;
 
@@ -111,8 +111,6 @@ public class Climber extends SubsystemBase {
 
       rightClimberSparkFlexConfig.follow(m_climberLeftSparkFlex, true);
 
-      /* Errors included in all TDNumber. Doesn't take Climber (this) as SubsystemBase
-
       m_TDclimberP = new TDNumber(this, "Climber PID", "climbP", Constants.ClimberConstants.kClimberP);
       m_TDclimberI = new TDNumber(this, "Climber PID", "climbI", Constants.ClimberConstants.kClimberI);
       m_TDclimberD = new TDNumber(this, "Climber PID", "climbD", Constants.ClimberConstants.kClimberD);
@@ -120,9 +118,8 @@ public class Climber extends SubsystemBase {
       m_TDclimberKs = new TDNumber(this, "Climber PID", "climbkS", Constants.ClimberConstants.kClimberkS);
       m_TDclimberKv = new TDNumber(this, "Climber PID", "climbkV", Constants.ClimberConstants.kClimberkV);
       m_TDclimberKa = new TDNumber(this, "Climber PID", "climbkA", Constants.ClimberConstants.kClimberkA);
-      m_TDclimberFFout = new TDNumber(this, "Climber PID", "FF Out");
 
-      */
+      m_TDclimberFFout = new TDNumber(this, "Climber PID", "FF Out");
 
       m_leftSparkFlexConfig.closedLoop.pid(Constants.ClimberConstants.kClimberP, Constants.ClimberConstants.kClimberI,
           Constants.ClimberConstants.kClimberD);
@@ -140,15 +137,12 @@ public class Climber extends SubsystemBase {
       ));
       m_climberSetpoint = new TrapezoidProfile.State(m_climberMotorEncoder.getPosition(), 0.0);
       m_climberState = new TrapezoidProfile.State(m_climberMotorEncoder.getPosition(), 0.0);
-      /*
 
       m_TDclimberProfilePosition = new TDNumber(this, "Climber PID", "Profile Position");
 
       m_climberEncoderValueInches = new TDNumber(this, "Climber Encoder Values", "Height (inches)", getClimberAngle());
       m_climberLeftCurrentOutput = new TDNumber(this, "Current", "Left Climber Output", m_climberLeftSparkFlex.getOutputCurrent());
       m_climberRightCurrentOutput = new TDNumber(this, "Current", "Right Climber Output", m_climberRightSparkFlex.getOutputCurrent());
-
-      */
     }
   }
 
