@@ -295,7 +295,7 @@ public class LED extends SubsystemBase{
 
 	/**
 	 * Sets the pattern to be drawn if a section isn't assigned a pattern.
-	 * This is typically handled by RobotContainer.
+	 * This is typically handled by Robot.java.
 	 */
 	public void setFallbackPattern(LEDPattern pattern) {
 		m_fallbackPattern = pattern;
@@ -305,19 +305,24 @@ public class LED extends SubsystemBase{
         FieldUtils.GameState gameState = FieldUtils.getInstance().getGameState();
         double currentMatchTime = FieldUtils.getInstance().stateTimeLeft();
         if (currentMatchTime < cfgDbl("stateChangeWarningTime")){
-            //something to alter the existing colors
+			setPattern(0, LEDPattern.kBlinkYellow, LEDSection.Priority.WARNING);
         }
 
         switch (gameState){
             case AUTO:
+				setPattern(0, LEDPattern.kSolidYellow, LEDSection.Priority.BASIC);
                 break;
             case TRANSITION:
+				setPattern(0, LEDPattern.kBlinkWhite, LEDSection.Priority.BASIC);
                 break;
             case RED_START:
+				setPattern(0, LEDPattern.kSolidRed, LEDSection.Priority.BASIC);
                 break;
             case BLUE_START:
+				setPattern(0, LEDPattern.kSolidBlue, LEDSection.Priority.BASIC);
                 break;
             case ENDGAME:
+				setPattern(0, LEDPattern.kSolidWhite, LEDSection.Priority.BASIC);
                 break;
             default: 
                 break;
