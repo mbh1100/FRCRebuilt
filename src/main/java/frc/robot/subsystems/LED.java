@@ -15,22 +15,20 @@ import frc.robot.Constants;
 import frc.robot.Constants.LEDConstants;
 
 public class LED extends SubsystemBase{
-
     private static LED m_LEDLights = null;
 
     private AddressableLED m_LED;
     private AddressableLEDBuffer m_LEDBuffer;
 
-    private LED(){
+    private LED() {
         super("LED");
 
-         m_LED = new AddressableLED(cfgInt("LEDPort"));
+        m_LED = new AddressableLED(cfgInt("LEDPort"));
 
-        m_LEDBuffer = new AddressableLEDBuffer(Constants.LEDConstants.LEDLength);
-        m_LED.setLength(Constants.LEDConstants.LEDLength);
+        m_LEDBuffer = new AddressableLEDBuffer(cfgInt("LEDCount"));
+        m_LED.setLength(cfgInt("LEDCount"));
 
-        m_LED.start(); //public static int L_LEDS = RoboRioMap.PWM_0;
-
+        m_LED.start();
     }
 
     public static LED getInstance() {
@@ -40,44 +38,33 @@ public class LED extends SubsystemBase{
         return m_LEDLights;
     }
 
-    
-    
     public void setLights(){
-        char gameState = FieldUtils.getInstance().getGameState();
+        FieldUtils.GameState gameState = FieldUtils.getInstance().getGameState();
         double currentMatchTime = FieldUtils.getInstance().stateTimeLeft();
         if (currentMatchTime < cfgDbl("stateChangeWarningTime")){
             //something to alter the existing colors
-        } 
+        }
+
         switch (gameState){
-
-            case 'A': //auto
-
+            case AUTO:
                 break;
-            case 'T' : //transition
-                //can we make it trans colors :3?
+            case TRANSITION:
                 break;
-            case 'R' : //red team active
-                
+            case RED_START:
                 break;
-            case 'B' : //blue team active
-                
+            case BLUE_START:
                 break;
-            case 'E' : //endgame
-                
+            case ENDGAME:
                 break;
-            default : 
-
+            default: 
                 break;
-
         }
     }
     
 
     @Override
     public void periodic() {
-        // TODO Auto-generated method stub
+        m_LED.setData(m_LEDBuffer);
         super.periodic();
     }
-    
-
 }
