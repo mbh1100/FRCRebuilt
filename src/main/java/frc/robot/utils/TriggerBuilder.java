@@ -95,7 +95,7 @@ public class TriggerBuilder<S> {
 	}
 
 	public TriggerBuilder<S> debounceLast(double debounce) {
-		Binding last = m_bindings.getLast();
+		Binding last = m_bindings.get(m_bindings.size()-1);
 		last.trigger = last.trigger.debounce(debounce);
 		return this;
 	}
