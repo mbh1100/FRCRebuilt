@@ -110,12 +110,12 @@ public class VisionSystem {
                 }
             }
 
-            if(visionEst.isPresent()) {
+            if (visionEst.isPresent()) {
                 EstimatedRobotPose est = visionEst.get();
-                double ambiguity = getResultAmbiguity(est, latestResult);
+                double ambiguity = 0;//getResultAmbiguity(est, latestResult);
                 double latestTimestamp = latestResult.getTimestampSeconds();
 
-                boolean valid = m_includeInPoseEstimates || validateResult(est, ambiguity);
+                boolean valid = !m_includeInPoseEstimates || validateResult(est, ambiguity);
             
                 boolean newResult = Math.abs(latestTimestamp - m_lastEstTime) > 1e-5;
                 if (newResult) {

@@ -392,6 +392,9 @@
         {"varName" : "turretCurrentTrip", "value" : 20},
         {"varName" : "turretZeroSpeedTolerance", "value" : 0.05},
 
+        {"varName" : "turretStallCurrentLimit", "value" : 25},
+        {"varName" : "turretFreeCurrentLimit", "value" : 30},
+
         {"varName" : "turretPositionX", "value" : 0},
         {"varName" : "turretPositionY", "value" : 0},
         {"varName" : "turretPositionZ", "value" : 0},
@@ -445,6 +448,10 @@
         {"varName" : "climberMinPosition", "value" : 0},
         {"varName" : "climberMaxPosition", "value" : 39.75}
 	],
+    
+    "Vision": [
+        {"varName" : "Enabled", "value" : true}
+    ],
 
 	"visionConfig" : [
         {
@@ -455,9 +462,9 @@
                 "z": 0.1479
             },
             "angles": {
-                "pitch": 60,
+                "pitch": 30,
                 "yaw": 0,
-                "roll": 90
+                "roll": 0
             },
             "primaryStrat": "MULTI_TAG_PNP_ON_COPROCESSOR",
             "backupStrat": "CLOSEST_TO_CAMERA_HEIGHT",

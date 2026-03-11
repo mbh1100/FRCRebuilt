@@ -249,6 +249,7 @@ public class Shooter extends SubsystemBase {
         m_turretConfig = turretMotorConfig.m_config;
         m_turretConfig.inverted(true);
         m_turretConfig.idleMode(IdleMode.kBrake);
+        m_turretConfig.smartCurrentLimit(cfgInt("turretStallCurrentLimit"), cfgInt("turretFreeCurrentLimit"));
         m_turretConfig.encoder.positionConversionFactor(Constants.ShooterConstants.kTurretPositionFactor);
         m_turretConfig.closedLoop.pid(m_turretP, m_turretI, m_turretD);
         m_turretConfig.closedLoop.positionWrappingEnabled(false);
@@ -441,7 +442,6 @@ public class Shooter extends SubsystemBase {
      * @return Valid hood angle in radians
      */
     public double pitchToHood(double angle) {
-        System.out.println("Hood pitch: " + angle);
         // TODO: implement pitch to hood angle conversion
         return 0;
     }
@@ -454,7 +454,6 @@ public class Shooter extends SubsystemBase {
      * @return Flywheel velocity in RPM
      */
     public double velocityToRPM(double velocity) {
-        System.out.println("Flywheel velocity: " + velocity);
         // TODO: implement velocity to RPM conversion
         return 0;
     }
