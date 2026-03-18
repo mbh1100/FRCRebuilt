@@ -12,6 +12,7 @@ import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.Command;
 import frc.robot.testingdashboard.TDNumber;
 import frc.robot.testingdashboard.TDSendable;
+import frc.robot.utils.FieldUtils;
 import frc.robot.utils.drive.SwerveDriveInputs;
 
 public class JoystickHeadingDrive extends Command {
@@ -21,6 +22,7 @@ public class JoystickHeadingDrive extends Command {
   private double kPheading = 0.01;
   private double kIheading = 0;
   private double kDheading = 0;
+  private Rotation2d rotationOffset;
   Drive m_drive;
 
   /** Creates a new Joystick Heading Drive. */
@@ -39,6 +41,7 @@ public class JoystickHeadingDrive extends Command {
   @Override
   public void initialize() {
     m_TDheading.set(m_drive.getGyroAngle());
+    rotationOffset = FieldUtils.getInstance().getRotationOffset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -65,7 +68,7 @@ public class JoystickHeadingDrive extends Command {
   private double getRotationFromTransalation() {
     double x = -MathUtil.applyDeadband(m_DriveInputs.getX(), OIConstants.kDriveDeadband);
     double y = -MathUtil.applyDeadband(m_DriveInputs.getY(), OIConstants.kDriveDeadband);
-    Rotation2d heading = new Rotation2d(x, y).plus(Rotation2d.k180deg);
+    Rotation2d heading = new Rotation2d(x, y).plus(rotationOffset);
     double currentHeading = m_drive.getHeading();
     return m_headingController.calculate(currentHeading, heading.getDegrees());
   }
